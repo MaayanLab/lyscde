@@ -1,13 +1,3 @@
-#' @title diff
-#'
-#' @description Change server URL.
-#'
-#' @param url
-#'
-#' @examples
-#' speedr::set_server(url)
-#'
-#' @export
 
 diffexp <- function(data1, data2, plotting=FALSE) {
   res = filter_rows(data1, data2)
