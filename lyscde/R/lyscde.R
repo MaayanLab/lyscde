@@ -9,10 +9,11 @@
 #'
 #' @export
 
-diffexp <- function(data1, data2) {
+diffexp <- function(data1, data2, plotting=FALSE) {
   res = filter_rows(data1, data2)
   res = diff_base(res[["data1"]], res[["data2"]])
-  res = normalize_statistic(res, plotting=T)
+  res = normalize_statistic(res, plotting=plotting)
+  return(res)
 }
 
 diff_base <- function(data1, data2){
@@ -41,7 +42,6 @@ normalize_statistic <-function(data, plotting=FALSE){
 
   lw1 <- loess(y ~ x)
 
-  plotting1 = F
   if(plotting){
     plot(x, y, pch=20, cex=0.5, cex.axis=2, cex.lab=2, xlab="average expression", ylab="diff statistic")
     lines(x, lw1$fitted, col="red", lwd=3)
@@ -63,7 +63,6 @@ normalize_statistic <-function(data, plotting=FALSE){
   xpos = wpos[offset:length(mpos)]
   xneg = wneg[offset:length(mneg)]
 
-
   if(plotting){
     plot(normt, pch=20, cex=0.2, ylim=c(-10,10))
     abline(h=0, col="black", lwd=4)
@@ -72,7 +71,6 @@ normalize_statistic <-function(data, plotting=FALSE){
   }
 
   if(plotting){
-
     plot(1:length(nnpos), nnpos, pch=20, cex=0.1, col="blue", ylim=c(-7, 7))
     points(1:length(xneg), nnneg, pch=20, cex=0.2, col="red")
 
