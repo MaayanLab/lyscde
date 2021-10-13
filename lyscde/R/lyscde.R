@@ -91,6 +91,8 @@ filter_rows <- function(data1, data2, min_detect=0.005){
   inter = intersect(rownames(data1), rownames(data2))
   data = cbind(data1[inter,], data2[inter,])
   pass = list()
+  print(dim(data))
+  print(data[1:4,1:4])
 
   pass = which(rowSums(data > 0)/ncol(data) >= min_detect)
   print(length(pass))
