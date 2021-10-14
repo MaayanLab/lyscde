@@ -109,20 +109,5 @@ plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
   plot(darr, pch=".", xlab="samples", ylab="counts", cex.lab=1.5,cex.main=2, xaxt="n", main=gene)
   abline(v=length(da1), lwd=4, col=rgb(1,0,0,0.5))
 
-  ww = which(darr > quantile(darr, probs = seq(0, 1, 0.01))[100])
 
-  points(ww, darr[ww], pch=".", cex=6, col="magenta")
-
-  mtext(l1, side=1,line=1, adj=0, cex=2)
-  mtext(l2, side=1,line=1, adj=1, cex=2)
-
-  mtext("% reads", side=3,line=0.4, adj=0, cex=1.2)
-  mtext("% reads", side=3,line=0.4, adj=1, cex=1.2)
-
-  for(i in 0:max(darr)){
-    ci1 = length(which(da1 == i))/length(da1)
-    ci2 = length(which(da2 == i))/length(da2)
-    text(0, i+0.2, signif(ci1, digits=2), pos = 4)
-    text(length(darr), i+0.2, signif(ci2, digits=2), pos = 2)
-  }
 }
