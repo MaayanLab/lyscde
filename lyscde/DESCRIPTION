@@ -1,7 +1,7 @@
 Package: lyscde
 Type: Package
 Title: Low Yield Single-Cell Differential Expression
-Version: 1.1.6
+Version: 1.1.7
 Author: Alexander Lachmann
 Maintainer: The package maintainer <alexander.lachmann@mssm.edu>
 Description: Calculate differential expression of genes for low yield single cell gene expression.
