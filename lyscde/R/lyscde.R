@@ -101,9 +101,5 @@ filter_rows <- function(data1, data2, min_detect=0.005){
 }
 
 plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
-
-  da1 = data1[gene,]
-  da2 = data2[gene,]
-
-
+  print("hello")
 }
