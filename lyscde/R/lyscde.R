@@ -104,7 +104,7 @@ plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
 
   da1 = data1[gene,]
   da2 = data2[gene,]
-  darr = c(da1, da2)
+  darr = c(unlist(da1), unlist(da2))
 
   plot(darr, pch=".", xlab="samples", ylab="counts", cex.lab=1.5,cex.main=2, xaxt="n", main=gene)
   abline(v=length(da1), lwd=4, col=rgb(1,0,0,0.5))
@@ -118,7 +118,6 @@ plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
 
   mtext("% reads", side=3,line=0.4, adj=0, cex=1.2)
   mtext("% reads", side=3,line=0.4, adj=1, cex=1.2)
-
 
   for(i in 0:max(darr)){
     ci1 = length(which(da1 == i))/length(da1)
