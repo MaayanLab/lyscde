@@ -91,8 +91,6 @@ filter_rows <- function(data1, data2, min_detect=0.005){
   inter = intersect(rownames(data1), rownames(data2))
   data = cbind(data1[inter,], data2[inter,])
   pass = list()
-  print(dim(data))
-  print(data[1:4,1:4])
 
   pass = which(rowSums(data > 0)/ncol(data) >= min_detect)
   print(length(pass))
@@ -106,9 +104,7 @@ plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
 
   da1 = data1[gene,]
   da2 = data2[gene,]
-
   darr = c(da1, da2)
-
 
   plot(darr, pch=".", xlab="samples", ylab="counts", cex.lab=1.5,cex.main=2, xaxt="n", main=gene)
   abline(v=length(da1), lwd=4, col=rgb(1,0,0,0.5))
