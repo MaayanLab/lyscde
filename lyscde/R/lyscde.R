@@ -125,5 +125,4 @@ plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
     text(0, i+0.2, signif(ci1, digits=2), pos = 4)
     text(length(darr), i+0.2, signif(ci2, digits=2), pos = 2)
   }
-
 }
