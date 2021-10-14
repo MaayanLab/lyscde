@@ -104,10 +104,6 @@ plotcounts <- function(gene, data1, data2, l1="data1", l2 = "data2"){
 
   da1 = data1[gene,]
   da2 = data2[gene,]
-  darr = c(unlist(da1), unlist(da2))
-
-  plot(darr, pch=".", xlab="samples", ylab="counts", cex.lab=1.5,cex.main=2, xaxt="n", main=gene)
-  abline(v=length(da1), lwd=4, col=rgb(1,0,0,0.5))
 
 
 }
