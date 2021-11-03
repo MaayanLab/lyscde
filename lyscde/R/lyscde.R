@@ -19,7 +19,7 @@ diff_base <- function(data1, data2){
 
 normalize_statistic <-function(data, plotting=FALSE){
   x = data[,"mean"]
-  y = result[,"statistic"]
+  y = data[,"statistic"]
   names(x) = rownames(data)
   names(y) = rownames(data)
   oo <- order(x)
