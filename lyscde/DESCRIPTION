@@ -7,3 +7,4 @@ Maintainer: The package maintainer <alexander.lachmann@mssm.edu>
 Description: Calculate differential expression of genes for low yield single cell gene expression.
 Encoding: UTF-8
 LazyData: true
+Imports: zoo, Seurat, Rtsne
