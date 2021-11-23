@@ -1,20 +1,28 @@
 
-diffexp <- function(data1, data2, plotting=FALSE) {
+diffexp <- function(data1, data2, normalize=FALSE, plotting=FALSE) {
   res = filter_rows(data1, data2)
-  res = diff_base(res[["data1"]], res[["data2"]])
+  res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize)
   res = normalize_statistic(res, plotting=plotting)
   return(res)
 }
 
-diff_base <- function(data1, data2){
+diff_base <- function(data1, data2, normalize=FALSE){
   tt = list()
   gmean = list()
 
   data = log2(1+cbind(data1, data2))
-  statistic = apply(data,1,function(x) {t.test(x[1:ncol(data1)],x[(ncol(data1)+1):ncol(data)])$statistic})
+  
+  if(normalize){
+    qdata = normalize.quantiles(data)
+    colnames(qdata) = colnames(data)
+    rownames(qdata) = rownames(data)
+    data = qdata
+  }
+
+  statistic = unlist(apply(data,1,function(x) {t.test(x[1:ncol(data1)],x[(ncol(data1)+1):ncol(data)])$statistic[[1]]}))
   cmean = (log2(1+rowMeans(data1))+log2(1+rowMeans(data2)))/2
 
-  return(data.frame(statistic, mean=cmean))
+  return(data.frame(list(statistic=statistic, mean=cmean)))
 }
 
 normalize_statistic <-function(data, plotting=FALSE){
