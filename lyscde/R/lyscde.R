@@ -3,6 +3,9 @@ diffexp <- function(data1, data2, normalize=FALSE, plotting=FALSE) {
   res = filter_rows(data1, data2)
   res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize)
   res = normalize_statistic(res, plotting=plotting)
+  
+  res = cbind(1:nrow(res), res[order(res[,3])])
+  colnames(res)[1] = "rank"
   return(res)
 }
 
@@ -13,7 +16,7 @@ diff_base <- function(data1, data2, normalize=FALSE){
   data = log2(1+cbind(data1, data2))
   
   if(normalize){
-    qdata = normalize.quantiles(data)
+    qdata = normalize.quantiles(as.matrix(data))
     colnames(qdata) = colnames(data)
     rownames(qdata) = rownames(data)
     data = qdata
