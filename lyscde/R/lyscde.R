@@ -4,7 +4,7 @@ diffexp <- function(data1, data2, normalize=FALSE, plotting=FALSE) {
   res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize)
   res = normalize_statistic(res, plotting=plotting)
   
-  res = cbind(1:nrow(res), res[order(res[,3])])
+  res = cbind(1:nrow(res), res[order(res[,3]),])
   colnames(res)[1] = "rank"
   return(res)
 }
