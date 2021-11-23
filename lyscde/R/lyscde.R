@@ -3,9 +3,10 @@ diffexp <- function(data1, data2, normalize=FALSE, plotting=FALSE) {
   res = filter_rows(data1, data2)
   res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize)
   res = normalize_statistic(res, plotting=plotting)
-  
-  res = cbind(1:nrow(res), res[order(res[,3]),])
+  mean_exp = res[,"mean"]
+  res = cbind(1:nrow(res), res[order(res[,3]),], mean_exp)
   colnames(res)[1] = "rank"
+  colnames(res)[6] = "mean_exp"
   return(res)
 }
 
