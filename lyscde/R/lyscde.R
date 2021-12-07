@@ -1,7 +1,7 @@
 
-diffexp <- function(data1, data2, normalize=FALSE, plotting=FALSE) {
+diffexp <- function(data1, data2, normalize=FALSE, method="normal", plotting=FALSE) {
   res = filter_rows(data1, data2)
-  res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize)
+  res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize, method=method)
   mean_exp = res[,"mean"]
   res = normalize_statistic(res, plotting=plotting)
   
@@ -11,20 +11,31 @@ diffexp <- function(data1, data2, normalize=FALSE, plotting=FALSE) {
   return(res)
 }
 
-diff_base <- function(data1, data2, normalize=FALSE){
+diff_base <- function(data1, data2, normalize=FALSE, method="normal"){
   tt = list()
   gmean = list()
 
-  data = log2(1+cbind(data1, data2))
+  if(method == "normal"){
+    data = log2(1+cbind(data1, data2))
   
-  if(normalize){
-    qdata = normalize.quantiles(as.matrix(data))
-    colnames(qdata) = colnames(data)
-    rownames(qdata) = rownames(data)
-    data = qdata
+    if(normalize){
+      qdata = normalize.quantiles(as.matrix(data))
+      colnames(qdata) = colnames(data)
+      rownames(qdata) = rownames(data)
+      data = qdata
+    }
+    statistic = unlist(apply(data,1,function(x) {t.test(x[1:ncol(data1)],x[(ncol(data1)+1):ncol(data)])$statistic[[1]]}))
+  }
+  else if(method == "nb"){
+    data = cbind(data1, data2)
+    class_label = rep(1, ncol(data1)+ncol(data2))
+    class_label[1:ncol(data1)] = 0
+    statistic = unlist(apply(data,1,function(x) {
+        fit <- glm.nb(x ~ class_label)
+        zscore = coef(summary(fit))[,"z value"]["class_label"]
+    }))
   }
 
-  statistic = unlist(apply(data,1,function(x) {t.test(x[1:ncol(data1)],x[(ncol(data1)+1):ncol(data)])$statistic[[1]]}))
   cmean = (log2(1+rowMeans(data1))+log2(1+rowMeans(data2)))/2
 
   return(data.frame(list(statistic=statistic, mean=cmean)))
