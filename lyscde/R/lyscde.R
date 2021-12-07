@@ -1,6 +1,6 @@
 
-diffexp <- function(data1, data2, normalize=FALSE, method="normal", plotting=FALSE) {
-  res = filter_rows(data1, data2)
+diffexp <- function(data1, data2, normalize=FALSE, method="normal", plotting=FALSE, filter=0.002) {
+  res = filter_rows(data1, data2, min_detect=filter)
   res = diff_base(res[["data1"]], res[["data2"]], normalize=normalize, method=method)
   mean_exp = res[,"mean"]
   res = normalize_statistic(res, plotting=plotting)
