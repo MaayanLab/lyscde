@@ -27,13 +27,15 @@ diff_base <- function(data1, data2, normalize=FALSE, method="normal"){
     statistic = unlist(apply(data,1,function(x) {t.test(x[1:ncol(data1)],x[(ncol(data1)+1):ncol(data)])$statistic[[1]]}))
   }
   else if(method == "nb"){
+    options(warn=-1)
     data = cbind(data1, data2)
-    class_label = rep(1, ncol(data1)+ncol(data2))
-    class_label[1:ncol(data1)] = 0
+    class_label = rep(0, ncol(data1)+ncol(data2))
+    class_label[1:ncol(data1)] = 1
     statistic = unlist(apply(data,1,function(x) {
         fit <- glm.nb(x ~ class_label)
         zscore = coef(summary(fit))[,"z value"]["class_label"]
     }))
+    options(warn=0)
   }
 
   cmean = (log2(1+rowMeans(data1))+log2(1+rowMeans(data2)))/2
