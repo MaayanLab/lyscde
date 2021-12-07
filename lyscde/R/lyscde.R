@@ -64,8 +64,7 @@ normalize_statistic <-function(data, plotting=FALSE){
   }
 
   normt = y-lw1$fitted
-  rr = rollmean(abs(normt), k=100)
-
+  
   wpos = which(normt > 0)
   wneg = which(normt < 0)
 
@@ -103,12 +102,12 @@ normalize_statistic <-function(data, plotting=FALSE){
 
   rrr = c(nnpos, nnneg)
   rnn = names(rrr)
-  pvals = c(ppos, pneg)
+  pvals = c(ppos, pneg)*2
   fdr = p.adjust(pvals, method="fdr")
 
   diffexp = data.frame(rnn, rrr, pvals, fdr)
-  colnames(diffexp) = c("gene", "t", "pval", "fdr")
-  diffexp = diffexp[order(diffexp[,"t"]),]
+  colnames(diffexp) = c("gene", "statistic", "pval", "fdr")
+  diffexp = diffexp[order(diffexp[,"statistic"]),]
 
   return(diffexp)
 }
